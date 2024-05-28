@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name="book")
 @Getter
 @Setter
 @ToString (exclude="borrowList")
@@ -30,8 +31,10 @@ public class Book {
     @OneToMany
     private List<Borrow> borrowList = new ArrayList<>();
 
-    public Book(int id, String title, String author, int releaseYear) {
-        this.id = id;
+    public Book() {
+    }
+
+    public Book(String title, String author, int releaseYear) {
         this.title = title;
         this.author = author;
         this.releaseYear = releaseYear;

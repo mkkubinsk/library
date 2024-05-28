@@ -36,8 +36,10 @@ public class Reader {
     @OneToMany
     private List<Borrow> borrowList = new ArrayList<>();
 
-    public Reader(int id, String surname, String name, String street, String city, String streetNo) {
-        this.id = id;
+    public Reader() {
+    }
+
+    public Reader(String surname, String name, String street, String city, String streetNo) {
         this.surname = surname;
         this.name = name;
         this.street = street;
