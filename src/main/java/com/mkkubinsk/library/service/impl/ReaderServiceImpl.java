@@ -1,7 +1,8 @@
-package com.mkkubinsk.library.service;
+package com.mkkubinsk.library.service.impl;
 
 import com.mkkubinsk.library.model.Reader;
 import com.mkkubinsk.library.repository.ReaderRepository;
+import com.mkkubinsk.library.service.ReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;

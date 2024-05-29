@@ -1,6 +1,7 @@
 package com.mkkubinsk.library.model;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
