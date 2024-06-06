@@ -17,6 +17,8 @@ public class BookController {
     private final BookRepository bookRepository;
     private final BookService bookService;
 
+    //TODO: Constructor?
+
     @GetMapping
     public ResponseEntity getAllBooks(){
         return ResponseEntity.ok(bookService.getAllBooks());
@@ -28,7 +30,7 @@ public class BookController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity getBookById(@RequestParam int id){
+    public ResponseEntity getBookById(@PathVariable int id){
         return ResponseEntity.ok(bookService.getBookById(id));
     }
 

@@ -39,9 +39,17 @@ public class Borrow {
     public Borrow() {
     }
 
-    public Borrow(int id, int idReader, int idBook, LocalDate dateBorrow, LocalDate dateReturn,
+    public Borrow(int idReader, int idBook, LocalDate dateBorrow, LocalDate dateReturn) {
+        this.idReader = idReader;
+        this.idBook = idBook;
+        this.dateBorrow = dateBorrow;
+        this.dateReturn = dateReturn;
+        //TODO: Add reader, book, borrowList in reader, book in constructor
+        //TODO: Update CommandToBorrowMapper after
+    }
+
+    public Borrow(int idReader, int idBook, LocalDate dateBorrow, LocalDate dateReturn,
                   Reader reader, Book book) {
-        this.id = id;
         this.idReader = idReader;
         this.idBook = idBook;
         this.dateBorrow = dateBorrow;

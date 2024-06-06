@@ -9,7 +9,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 public class CommandToBookMapper {
 
     public Book fromCommand(CreateBookCommand createBookCommand){
-        return new Book(createBookCommand.getTitle(), createBookCommand.getAuthor(), createBookCommand.getReleaseYear());
+        return new Book(createBookCommand.getTitle(),
+                createBookCommand.getAuthor(),
+                createBookCommand.getReleaseYear());
 
     }
 }

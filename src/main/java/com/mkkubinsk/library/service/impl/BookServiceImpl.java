@@ -9,17 +9,27 @@ import com.mkkubinsk.library.service.BookService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeFormatterBuilder;
+import java.time.temporal.ChronoField;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BookServiceImpl implements BookService {
 
-    @Autowired
     BookRepository bookRepository;
+    CommandToBookMapper commandToBookMapper;
 
     @Autowired
-    CommandToBookMapper commandToBookMapper;
+    public BookServiceImpl(BookRepository bookRepository, CommandToBookMapper commandToBookMapper) {
+        this.bookRepository = bookRepository;
+        this.commandToBookMapper = commandToBookMapper;
+    }
 
     @Override
     public List<Book> getAllBooks() {
@@ -28,7 +38,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public Book getBookById(int id) {
-
+        //TODO Add exception handling for Book findById
         return bookRepository.findById(id).orElseThrow();
     }
 
@@ -45,5 +55,23 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(int id) {
 
+    }
+
+    public List<Book> getBookListFromFile() throws IOException {
+
+        DateTimeFormatter format = new DateTimeFormatterBuilder()
+                .appendPattern("yyyy")
+                .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
+                .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
+                .toFormatter();
+
+        return Files.lines(Paths.get("ksiazki.txt"))
+                .map(l -> l.split(";"))
+                .map(w -> new Book(
+                        w[1],
+                        w[2],
+                        LocalDate.parse("2008", format)
+                ))
+                .toList();
     }
 }

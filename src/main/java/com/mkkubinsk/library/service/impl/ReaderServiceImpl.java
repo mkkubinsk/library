@@ -1,49 +1,53 @@
 package com.mkkubinsk.library.service.impl;
 
+import com.mkkubinsk.library.mapper.CommandToReaderMapper;
+import com.mkkubinsk.library.model.Book;
 import com.mkkubinsk.library.model.Reader;
+import com.mkkubinsk.library.model.command.CreateReaderCommand;
+import com.mkkubinsk.library.model.command.UpdateReaderCommand;
 import com.mkkubinsk.library.repository.ReaderRepository;
 import com.mkkubinsk.library.service.ReaderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class ReaderServiceImpl implements ReaderService {
 
-    private ReaderRepository readerRepository;
+    ReaderRepository readerRepository;
+    CommandToReaderMapper commandToReaderMapper;
 
     @Autowired
-    public ReaderServiceImpl(ReaderRepository readerRepository) {
+    public ReaderServiceImpl(ReaderRepository readerRepository, CommandToReaderMapper commandToReaderMapper) {
         this.readerRepository = readerRepository;
+        this.commandToReaderMapper = commandToReaderMapper;
     }
 
     @Override
-    public List<Reader> findAll() {
+    public List<Reader> getAllReaders() {
         return readerRepository.findAll();
     }
 
     @Override
-    public Reader findById(int id) {
-
-        Optional<Reader> result = readerRepository.findById(id);
-        Reader reader = null;
-
-        if(result.isPresent()) {
-            reader = result.get();
-        } else {
-            throw new RuntimeException("Did not find reader id - " + id);
-        }
-
-        return reader;
+    public Reader getReaderById(int id) {
+        //TODO Add exception handling for Reader findById
+        return readerRepository.findById(id).orElseThrow();
     }
 
     @Override
-    public Reader save(Reader reader) {
-        return readerRepository.save(reader);
+    public Reader createReader(CreateReaderCommand createReaderCommand) {
+        return readerRepository.save(commandToReaderMapper.fromCommand(createReaderCommand));
     }
 
     @Override
-    public void deleteById(int id) {
-        readerRepository.deleteById(id);
+    public Reader updateReader(int id, UpdateReaderCommand updateReaderCommand) {
+        return null;
+    }
+
+    @Override
+    public void deleteReader(int id) {
+
     }
 }
