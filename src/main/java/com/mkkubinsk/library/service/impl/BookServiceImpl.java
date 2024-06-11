@@ -56,22 +56,4 @@ public class BookServiceImpl implements BookService {
     public void deleteBook(int id) {
 
     }
-
-    public List<Book> getBookListFromFile() throws IOException {
-
-        DateTimeFormatter format = new DateTimeFormatterBuilder()
-                .appendPattern("yyyy")
-                .parseDefaulting(ChronoField.MONTH_OF_YEAR, 1)
-                .parseDefaulting(ChronoField.DAY_OF_MONTH, 1)
-                .toFormatter();
-
-        return Files.lines(Paths.get("ksiazki.txt"))
-                .map(l -> l.split(";"))
-                .map(w -> new Book(
-                        w[1],
-                        w[2],
-                        LocalDate.parse("2008", format)
-                ))
-                .toList();
-    }
 }
