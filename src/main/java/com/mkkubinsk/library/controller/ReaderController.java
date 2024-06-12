@@ -1,5 +1,6 @@
 package com.mkkubinsk.library.controller;
 
+import com.mkkubinsk.library.mapper.ReaderToDtoMapper;
 import com.mkkubinsk.library.model.Reader;
 import com.mkkubinsk.library.model.command.CreateReaderCommand;
 import com.mkkubinsk.library.model.dto.ReaderDto;
@@ -19,37 +20,28 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class ReaderController {
 
-    private final ReaderRepository readerRepository;
     private final ReaderService readerService;
-    private final ModelMapper modelMapper;
+    private final ReaderToDtoMapper readerToDtoMapper;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ReaderDto> getAllReaders() {
         List<Reader> readerList = readerService.getAllReaders();
         return readerList.stream()
-                .map(this::convertToDto)
+                .map(readerToDtoMapper::convertToDto)
                 .collect(Collectors.toList());
     }
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public ReaderDto createReader(@RequestBody CreateReaderCommand createReaderCommand) {
-        return convertToDto(readerService.createReader(createReaderCommand));
+        return readerToDtoMapper.convertToDto(readerService.createReader(createReaderCommand));
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public ReaderDto getReaderById(@PathVariable int id) {
-        return convertToDto(readerService.getReaderById(id));
-    }
-
-    private ReaderDto convertToDto(Reader reader) {
-        return modelMapper.map(reader, ReaderDto.class);
-    }
-
-    private Reader convertToEntity(ReaderDto readerDto) {
-        return modelMapper.map(readerDto, Reader.class);
+        return readerToDtoMapper.convertToDto(readerService.getReaderById(id));
     }
 
 }

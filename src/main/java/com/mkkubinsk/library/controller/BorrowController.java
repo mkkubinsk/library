@@ -1,5 +1,6 @@
 package com.mkkubinsk.library.controller;
 
+import com.mkkubinsk.library.mapper.BorrowToDtoMapper;
 import com.mkkubinsk.library.model.Borrow;
 import com.mkkubinsk.library.model.command.CreateBorrowCommand;
 import com.mkkubinsk.library.model.dto.BookDto;
@@ -21,36 +22,28 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class BorrowController {
 
-    private final BorrowRepository borrowRepository;
     private final BorrowService borrowService;
-    private final ModelMapper modelMapper;
+    private final BorrowToDtoMapper borrowToDtoMapper;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<BorrowDto> getAllBorrows(){
         List<Borrow> borrowList = borrowService.getAllBorrows();
         return borrowList.stream()
-                .map(this::convertToDto)
+                .map(borrowToDtoMapper::convertToDto)
                 .collect(Collectors.toList());
     }
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
     public BorrowDto createBorrow(@RequestBody CreateBorrowCommand createBorrowCommand) {
-        return convertToDto(borrowService.createBorrow(createBorrowCommand));
+        return borrowToDtoMapper.convertToDto(borrowService.createBorrow(createBorrowCommand));
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public BorrowDto getBorrowById(@PathVariable int id) {
-        return convertToDto(borrowService.getBorrowById(id));
+        return borrowToDtoMapper.convertToDto(borrowService.getBorrowById(id));
     }
 
-    private BorrowDto convertToDto(Borrow borrow) {
-        return modelMapper.map(borrow, BorrowDto.class);
-    }
-
-    private Borrow convertToEntity(BorrowDto borrowDto) {
-        return modelMapper.map(borrowDto, Borrow.class);
-    }
 }
