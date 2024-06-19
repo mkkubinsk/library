@@ -8,6 +8,7 @@ import com.mkkubinsk.library.model.dto.BorrowDto;
 import com.mkkubinsk.library.repository.BorrowRepository;
 import com.mkkubinsk.library.service.BookService;
 import com.mkkubinsk.library.service.BorrowService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -36,7 +37,7 @@ public class BorrowController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public BorrowDto createBorrow(@RequestBody CreateBorrowCommand createBorrowCommand) {
+    public BorrowDto createBorrow(@Valid @RequestBody CreateBorrowCommand createBorrowCommand) {
         return borrowToDtoMapper.convertToDto(borrowService.createBorrow(createBorrowCommand));
     }
 

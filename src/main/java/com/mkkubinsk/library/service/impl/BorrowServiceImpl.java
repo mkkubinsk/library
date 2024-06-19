@@ -46,6 +46,6 @@ public class BorrowServiceImpl implements BorrowService {
 
     @Override
     public void deleteBorrow(int id) {
-
+        borrowRepository.deleteById(id);
     }
 }

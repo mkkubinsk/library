@@ -6,6 +6,7 @@ import com.mkkubinsk.library.model.command.CreateReaderCommand;
 import com.mkkubinsk.library.model.dto.ReaderDto;
 import com.mkkubinsk.library.repository.ReaderRepository;
 import com.mkkubinsk.library.service.ReaderService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
@@ -34,7 +35,7 @@ public class ReaderController {
 
     @PostMapping("/add")
     @ResponseStatus(HttpStatus.CREATED)
-    public ReaderDto createReader(@RequestBody CreateReaderCommand createReaderCommand) {
+    public ReaderDto createReader(@Valid @RequestBody CreateReaderCommand createReaderCommand) {
         return readerToDtoMapper.convertToDto(readerService.createReader(createReaderCommand));
     }
 

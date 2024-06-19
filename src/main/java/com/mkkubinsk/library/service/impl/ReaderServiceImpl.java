@@ -46,6 +46,6 @@ public class ReaderServiceImpl implements ReaderService {
 
     @Override
     public void deleteReader(int id) {
-
+        readerRepository.deleteById(id);
     }
 }
