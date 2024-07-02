@@ -14,7 +14,9 @@ public interface BookService {
 
     Book createBook(CreateBookCommand createBookCommand);
 
-    Book updateBook(int id, UpdateBookCommand updateBookCommand);
+    Book updateBook(int id, CreateBookCommand createBookCommand);
+
+    Book patchBook(int id, UpdateBookCommand updateBookCommand);
 
     void deleteBook(int id);
 

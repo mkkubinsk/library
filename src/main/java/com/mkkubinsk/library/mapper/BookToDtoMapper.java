@@ -14,4 +14,5 @@ public class BookToDtoMapper {
                 book.getAuthor(),
                 book.getReleaseYear());
     }
+
 }
